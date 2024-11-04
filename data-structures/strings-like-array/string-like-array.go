@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Create a function that reverses a string:
@@ -20,14 +19,17 @@ func reverseString(s string) string {
 }
 
 func reverseString2(s string) string {
-	backwards := make([]string, len(s))
-	totalItems := len(s) - 1
-	for i := totalItems; i >= 0; i-- {
-		backwards = append(backwards, string(s[i]))
+	// Criar um slice de runas de tamanho fixo igual ao comprimento da string
+	r := []rune(s)
+	backwards := make([]rune, len(s))
+
+	// Preencher o slice ao contrário
+	for i := 0; i < len(r); i++ {
+		backwards[len(r)-1-i] = r[i]
 	}
 
-	justString := strings.Join(backwards, "")
-	return justString
+	// Converter o slice de volta para string
+	return string(backwards)
 }
 
 func main() {
