@@ -4,10 +4,10 @@ import "fmt"
 
 func rotate(nums []int, k int) {
 	n := len(nums)
-	k %= n
-	reverse(nums, 0, n-1)
-	reverse(nums, 0, k-1)
-	reverse(nums, k, n-1)
+	k %= n                // Se k for maior que o tamanho do array, ajustamos para evitar rotações desnecessárias
+	reverse(nums, 0, n-1) // Reverte o array inteiro
+	reverse(nums, 0, k-1) // Reverte os primeiros k elementos
+	reverse(nums, k, n-1) // Reverte os elementos restantes
 }
 
 func reverse(nums []int, start, end int) {
