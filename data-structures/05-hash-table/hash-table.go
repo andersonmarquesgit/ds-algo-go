@@ -95,6 +95,18 @@ func (h *HashTable) Contains(key interface{}) bool {
 	return false
 }
 
+func (h *HashTable) Keys() []interface{} {
+	keys := []interface{}{}
+
+	for i := 0; i < h.size; i++ {
+		if h.buckets[i] != nil {
+			keys = append(keys, h.buckets[i][0].key)
+		}
+	}
+
+	return keys
+}
+
 func main() {
 	myHashTable := NewHashTable(50)
 	myHashTable.Set("grapes", 10000)
@@ -110,4 +122,6 @@ func main() {
 	myHashTable.Set("orange", 1000)
 	fmt.Println("Value for 'orange':", myHashTable.Get("orange"))
 	fmt.Println("Contains 'orange'?", myHashTable.Contains("orange"))
+
+	fmt.Println("Keys:", myHashTable.Keys())
 }
