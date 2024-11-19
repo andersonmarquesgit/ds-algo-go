@@ -65,6 +65,10 @@ func (l *LinkedList) Insert(position int, value interface{}) {
 				currentNode = currentNode.next
 				currentPosition++
 			}
+
+			if currentNode.next == nil {
+				l.tail = &newNode
+			}
 			newNode.next = currentNode.next
 			currentNode.next = &newNode
 			l.length++
@@ -84,24 +88,28 @@ func (l *LinkedList) Print() {
 func main() {
 	myLinkedList := NewLinkedList()
 	myLinkedList.Append(5)
+	myLinkedList.Print()
 	fmt.Println("Head: ", myLinkedList.head.value)
 	fmt.Println("Next: ", myLinkedList.head.next)
 	fmt.Println("Tail: ", *myLinkedList.tail)
 	fmt.Println("Length", myLinkedList.length)
 	fmt.Println("------")
 	myLinkedList.Append(10)
+	myLinkedList.Print()
 	fmt.Println("Head: ", myLinkedList.head.value)
 	fmt.Println("Next: ", myLinkedList.head.next.value)
 	fmt.Println("Tail: ", *myLinkedList.tail)
 	fmt.Println("Length", myLinkedList.length)
 	fmt.Println("------")
 	myLinkedList.Append(15)
+	myLinkedList.Print()
 	fmt.Println("Head: ", myLinkedList.head.value)
 	fmt.Println("Next: ", myLinkedList.head.next.value)
 	fmt.Println("Tail: ", *myLinkedList.tail)
 	fmt.Println("Length", myLinkedList.length)
 	fmt.Println("------")
 	myLinkedList.Prepend(35)
+	myLinkedList.Print()
 	fmt.Println("Head: ", myLinkedList.head.value)
 	fmt.Println("Next: ", myLinkedList.head.next.value)
 	fmt.Println("Tail: ", *myLinkedList.tail)
