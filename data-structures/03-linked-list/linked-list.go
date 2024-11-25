@@ -173,6 +173,28 @@ func (l *LinkedList) Insert2(index int, value interface{}) {
 	l.length++
 }
 
+func (l *LinkedList) Remove(index int) {
+	if index < 0 || index >= l.length {
+		panic("Invalid index")
+	}
+
+	if index == 0 {
+		l.head = l.head.next
+		l.length--
+		return
+	}
+
+	currentPosition := 1
+	currentNode := l.head
+	for currentPosition != index && currentNode.next != nil {
+		currentNode = currentNode.next
+		currentPosition++
+	}
+
+	currentNode.next = currentNode.next.next
+	l.length--
+}
+
 func (l *LinkedList) Print() {
 	currentNode := l.head
 	for currentNode != nil {
@@ -241,6 +263,15 @@ func main() {
 	myLinkedList.Insert2(2, 222)
 	myLinkedList.Print()
 	fmt.Println("Insert With Insert: ", 222, " in index ", 2)
+	fmt.Println("Offset: ", myLinkedList.offset)
+	fmt.Println("Length: ", myLinkedList.length)
+	fmt.Println("Head: ", myLinkedList.head.value)
+	fmt.Println("Tail: ", myLinkedList.tail.value)
+	fmt.Println("------")
+
+	myLinkedList.Remove(2)
+	myLinkedList.Print()
+	fmt.Println("Remove index: ", 2)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
