@@ -63,12 +63,12 @@ func (l *LinkedList) Append2(value interface{}) {
 		l.head = &newNode
 		l.tail = &newNode
 		l.nodeMap[0] = &newNode
-	} else {
-		l.tail.next = &newNode
-		l.tail = &newNode
-		l.nodeMap[l.length] = &newNode
+		return
 	}
 
+	l.tail.next = &newNode
+	l.tail = &newNode
+	l.nodeMap[l.length] = &newNode
 	l.length++
 }
 
@@ -101,22 +101,22 @@ func (l *LinkedList) Prepend(value interface{}) {
 	}
 }
 
-func (l *LinkedList) Insert(position int, value interface{}) {
+func (l *LinkedList) Insert(index int, value interface{}) {
 	currentPosition := 1
-	if position > 0 && position <= l.length {
+	if index > 0 && index <= l.length {
 		newNode := Node{
 			value: value,
 			next:  nil,
 		}
 
 		currentNode := l.head
-		if currentPosition == position && currentNode.next == nil {
+		if currentPosition == index && currentNode.next == nil {
 			currentNode.next = &newNode
 			l.tail = &newNode
 			l.nodeMap[l.length] = &newNode
 			l.length++
 		} else {
-			for currentPosition != position && currentNode.next != nil { // O(n)
+			for currentPosition != index && currentNode.next != nil { // O(n)
 				currentNode = currentNode.next
 				currentPosition++
 			}
@@ -133,17 +133,17 @@ func (l *LinkedList) Insert(position int, value interface{}) {
 }
 
 // generate a insert2 method with O(1) complexity
-func (l *LinkedList) Insert2(position int, value interface{}) {
-	if position < 0 || position > l.length {
-		panic("Invalid position")
+func (l *LinkedList) Insert2(index int, value interface{}) {
+	if index < 0 || index > l.length {
+		panic("Invalid index")
 	}
 
-	if position == 0 {
+	if index == 0 {
 		l.Prepend(value)
 		return
 	}
 
-	if position == l.length {
+	if index == l.length {
 		l.Append2(value)
 		return
 	}
@@ -154,13 +154,13 @@ func (l *LinkedList) Insert2(position int, value interface{}) {
 	}
 
 	// Calcular o índice real no nodeMap
-	//realIndex := position - 1 + l.offset
+	//realIndex := index - 1 + l.offset
 
 	realIndex := 0
 	if l.offset == 0 {
-		realIndex = position - 1
+		realIndex = index - 1
 	} else {
-		realIndex = position + l.offset
+		realIndex = index + l.offset
 	}
 
 	// Obter o nó anterior
@@ -168,7 +168,7 @@ func (l *LinkedList) Insert2(position int, value interface{}) {
 
 	newNode.next = prevNode.next
 	prevNode.next = &newNode
-	//l.nodeMap[position+l.offset] = &newNode
+	//l.nodeMap[index+l.offset] = &newNode
 	l.nodeMap[realIndex] = &newNode
 	l.length++
 }
@@ -186,6 +186,7 @@ func main() {
 	myLinkedList := NewLinkedList()
 	myLinkedList.Prepend(35)
 	myLinkedList.Print()
+	fmt.Println("Insert With Prepend: ", 35)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -194,6 +195,7 @@ func main() {
 
 	myLinkedList.Insert2(1, 101)
 	myLinkedList.Print()
+	fmt.Println("Insert With Insert: ", 101, " in index ", 1)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -202,6 +204,7 @@ func main() {
 
 	myLinkedList.Insert2(0, 100)
 	myLinkedList.Print()
+	fmt.Println("Insert With Insert: ", 100, " in index ", 0)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -210,6 +213,7 @@ func main() {
 
 	myLinkedList.Insert2(2, 55)
 	myLinkedList.Print()
+	fmt.Println("Insert With Insert: ", 55, " in index ", 2)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -218,6 +222,7 @@ func main() {
 
 	myLinkedList.Append(888)
 	myLinkedList.Print()
+	fmt.Println("Insert With Append: ", 888)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -226,6 +231,7 @@ func main() {
 
 	myLinkedList.Prepend(111)
 	myLinkedList.Print()
+	fmt.Println("Insert With Prepend: ", 111)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
@@ -234,6 +240,7 @@ func main() {
 
 	myLinkedList.Insert2(2, 222)
 	myLinkedList.Print()
+	fmt.Println("Insert With Insert: ", 222, " in index ", 2)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
