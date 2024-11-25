@@ -41,17 +41,10 @@ func (hm *MyHashMap) get(key int) int {
 
 func (hm *MyHashMap) remove(key int) {
 	hash := hm.hash(key)
-	for i, v := range hm.bucket[hash] {
-		if v == key {
+	for i := 0; i < len(hm.bucket[hash]); i += 2 {
+		if hm.bucket[hash][i] == key {
 			hm.bucket[hash] = append(hm.bucket[hash][:i], hm.bucket[hash][i+2:]...)
-		}
-	}
-}
-
-func (hm *MyHashMap) print() {
-	for i, v := range hm.bucket {
-		if len(v) != 0 {
-			println("Key: ", i, "Value: ", v[0])
+			return
 		}
 	}
 }
