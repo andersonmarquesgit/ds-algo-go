@@ -73,8 +73,71 @@ func (tree *BinarySearchTree) Lookup(value int) bool {
 	return false
 }
 
-func (tree *BinarySearchTree) Delete(value int) bool {
-	return false
+func (tree *BinarySearchTree) Delete(value int) {
+	if tree.root == nil {
+		return
+	}
+
+	// Find the node to delete
+	var currentNode, parentNode *Node
+	currentNode = tree.root
+	for currentNode != nil {
+		if value < currentNode.Value { // Go to Left
+			parentNode = currentNode
+			currentNode = currentNode.Left
+		} else if value > currentNode.Value { // Go to Right
+			parentNode = currentNode
+			currentNode = currentNode.Right
+		} else { // Found the node to delete
+			// We found the node to delete
+			// Option 1: No right child
+			if currentNode.Right == nil {
+				if parentNode == nil { // This case is when we are deleting the root node
+					tree.root = currentNode.Left
+				} else {
+					if currentNode.Value < parentNode.Value { // Node to delete is on the Left of parent node
+						parentNode.Left = currentNode.Left
+					} else if currentNode.Value > parentNode.Value { // Node to delete is on the Right of parent node
+						parentNode.Right = currentNode.Left
+					}
+				}
+			} else if currentNode.Right.Left == nil {
+				if parentNode == nil {
+					tree.root = currentNode.Right
+				} else {
+					if currentNode.Value < parentNode.Value {
+						parentNode.Left = currentNode.Right
+					} else if currentNode.Value > parentNode.Value {
+						parentNode.Right = currentNode.Right
+					}
+				}
+			} else {
+				// Find the Right child's Left most child
+				leftMost := currentNode.Right.Left
+				leftMostParent := currentNode.Right
+				for leftMost.Left != nil {
+					leftMostParent = leftMost
+					leftMost = leftMost.Left
+				}
+
+				// Parent's Left subtree is now leftMost's Right subtree
+				leftMostParent.Left = leftMost.Right
+				leftMost.Left = currentNode.Left
+				leftMost.Right = currentNode.Right
+
+				if parentNode == nil {
+					tree.root = leftMost
+				} else {
+					if currentNode.Value < parentNode.Value {
+						parentNode.Left = leftMost
+					} else if currentNode.Value > parentNode.Value {
+						parentNode.Right = leftMost
+					}
+				}
+			}
+			return
+		}
+	}
 }
 
 /*
