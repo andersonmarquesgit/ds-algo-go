@@ -55,8 +55,22 @@ func insertRecursion(newNode, currentNode *Node) {
 	}
 }
 
-func (tree *BinarySearchTree) Lookup(value int) *Node {
-	return nil
+func (tree *BinarySearchTree) Lookup(value int) bool {
+	if tree.root == nil {
+		return false
+	}
+
+	currentNode := tree.root
+	for currentNode != nil {
+		if value < currentNode.Value {
+			currentNode = currentNode.Left
+		} else if value > currentNode.Value {
+			currentNode = currentNode.Right
+		} else {
+			return true
+		}
+	}
+	return false
 }
 
 func (tree *BinarySearchTree) Delete(value int) bool {
@@ -83,6 +97,14 @@ func main() {
 	myBST.Insert(180)
 	myBST.Insert(175)
 	myBST.Print()
+
+	fmt.Println("Lookup 20:", myBST.Lookup(20))
+	fmt.Println("Lookup 170:", myBST.Lookup(170))
+	fmt.Println("Lookup 175:", myBST.Lookup(175))
+	fmt.Println("Lookup 180:", myBST.Lookup(180))
+	fmt.Println("Lookup 1:", myBST.Lookup(1))
+	fmt.Println("Lookup 6:", myBST.Lookup(6))
+	fmt.Println("Lookup 44:", myBST.Lookup(44))
 }
 
 // Print exibe a árvore binária no formato JSON.
