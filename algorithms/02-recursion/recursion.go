@@ -44,6 +44,19 @@ func reverseStringIterative(str string) string {
 	// The loop will return "olleh"
 }
 
+func reverseString(s []byte) {
+	reverseStringHelper(s, 0, len(s)-1)
+}
+
+func reverseStringHelper(s []byte, left, right int) {
+	if left >= right {
+		return
+	}
+
+	s[left], s[right] = s[right], s[left]
+	reverseStringHelper(s, left+1, right-1)
+}
+
 func main() {
 	fmt.Println(reverseStringRecursion("hello"))  // olleh
 	fmt.Println(reverseStringRecursion("world"))  // dlrow
@@ -52,4 +65,8 @@ func main() {
 	fmt.Println(reverseStringIterative("hello"))  // olleh
 	fmt.Println(reverseStringIterative("world"))  // dlrow
 	fmt.Println(reverseStringIterative("golang")) // gnalog
+
+	s := []byte{'h', 'e', 'l', 'l', 'o'}
+	reverseString(s)
+	fmt.Println(string(s)) // olleh
 }
