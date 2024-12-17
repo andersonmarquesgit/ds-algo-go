@@ -25,6 +25,8 @@ Follow up: Could you optimize your algorithm to use only O(rowIndex) extra space
 
 package main
 
+import "fmt"
+
 func getRow(rowIndex int) []int {
 	if rowIndex == 0 { // Base case
 		return []int{1}
@@ -43,4 +45,22 @@ func getRow(rowIndex int) []int {
 	}
 
 	return row
+}
+
+func main() {
+	// Example 1
+	// Input: rowIndex = 3
+	// Output: [1,3,3,1]
+	// Explanation: The row with index 3 is [1,3,3,1]
+	// The function should return the row
+	// 1
+	// 1 1
+	// 1 2 1
+	// 1 3 3 1
+
+	row := getRow(3)
+	fmt.Println(row)
+
+	row2 := getRow(2)
+	fmt.Println(row2)
 }
