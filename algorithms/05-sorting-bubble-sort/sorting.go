@@ -6,7 +6,7 @@ func bubbleSort(nums []int) []int {
 	isSorted := false
 
 	for !isSorted {
-		makeChange := false
+		swapNumbers := false
 		for i := 0; i < len(nums); i++ {
 			if i == len(nums)-1 {
 				break
@@ -16,11 +16,11 @@ func bubbleSort(nums []int) []int {
 				temp := nums[i+1]
 				nums[i+1] = nums[i]
 				nums[i] = temp
-				makeChange = true
+				swapNumbers = true
 			}
 		}
 
-		if !makeChange {
+		if !swapNumbers {
 			isSorted = true
 		}
 	}
