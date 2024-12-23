@@ -15,7 +15,6 @@ func selectionSort(nums []int) []int {
 		}
 		nums[swapPosition] = nums[i]
 		nums[i] = minorTemp
-
 	}
 
 	return nums
@@ -24,4 +23,7 @@ func selectionSort(nums []int) []int {
 func main() {
 	nums := []int{8, 5, 2, 6, 9, 3, 1, 4, 0, 7}
 	fmt.Println(selectionSort(nums))
+
+	nums2 := []int{99, 44, 6, 2, 1, 5, 63, 87, 283, 4, 0}
+	fmt.Println(selectionSort(nums2))
 }
