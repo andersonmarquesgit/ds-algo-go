@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func insertionSort(nums []int) []int {
+func insertionSort(nums []int) []int { //O(n^2)
 	for i := 1; i < len(nums); i++ {
 		j := i
 		for j > 0 && nums[j] < nums[j-1] {

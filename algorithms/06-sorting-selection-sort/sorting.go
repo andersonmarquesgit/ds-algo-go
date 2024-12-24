@@ -15,6 +15,7 @@ func selectionSort(nums []int) []int {
 		}
 		nums[swapPosition] = nums[i]
 		nums[i] = minorTemp
+
 	}
 
 	return nums
