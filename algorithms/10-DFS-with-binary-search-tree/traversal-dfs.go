@@ -148,55 +148,51 @@ func (tree *BinarySearchTree) Delete(value int) {
 	  1   6    15  170
 */
 
-// Abordagem iterativa
-func breadthFirstSearch(tree *BinarySearchTree) {
-	currentNode := tree.root
-	var list []int
-	var queue []*Node
-
-	queue = append(queue, currentNode)
-
-	for len(queue) > 0 {
-		currentNode = queue[0] // Get the first element in the queue
-		queue = queue[1:]      // Remove the first element from the queue
-		/* Aqui na queue temos os filhos do currentNode (Left e Right) que ainda não foram visitados
-		*  e que serão visitados na próxima iteração. Esse é ponto de desvantagem do BFS em relação ao DFS.
-		*  Isso gera um consumo maior de memória, pois a queue pode crescer muito.
-		 */
-
-		list = append(list, currentNode.Value) // Add the current node to the list
-
-		if currentNode.Left != nil {
-			queue = append(queue, currentNode.Left)
-		}
-		if currentNode.Right != nil {
-			queue = append(queue, currentNode.Right)
-		}
-	}
-
-	fmt.Println("BFS: ", list)
+// Por não usarmos queue no DFS (Depth First Search),
+// não temos a desvantagem de ter que armazenar todos os elementos em memória.
+func (tree *BinarySearchTree) DFSInOrder() []int {
+	return traverseInOrder(tree.root, []int{})
 }
 
-// Abordagem recursiva
-func breadthFirstSearchRecursive(queue []*Node, list []int) {
-	if len(queue) == 0 {
-		fmt.Println("BFS Recursive: ", list)
-		return
+func traverseInOrder(node *Node, list []int) []int {
+	if node.Left != nil {
+		list = traverseInOrder(node.Left, list)
 	}
-
-	currentNode := queue[0]
-	queue = queue[1:]
-
-	list = append(list, currentNode.Value)
-
-	if currentNode.Left != nil {
-		queue = append(queue, currentNode.Left)
+	list = append(list, node.Value)
+	if node.Right != nil {
+		list = traverseInOrder(node.Right, list)
 	}
-	if currentNode.Right != nil {
-		queue = append(queue, currentNode.Right)
-	}
+	return list
+}
 
-	breadthFirstSearchRecursive(queue, list)
+func (tree *BinarySearchTree) DFSPreOrder() []int {
+	return traversePreOrder(tree.root, []int{})
+}
+
+func traversePreOrder(node *Node, list []int) []int {
+	list = append(list, node.Value)
+	if node.Left != nil {
+		list = traversePreOrder(node.Left, list)
+	}
+	if node.Right != nil {
+		list = traversePreOrder(node.Right, list)
+	}
+	return list
+}
+
+func (tree *BinarySearchTree) DFSPostOrder() []int {
+	return traversePostOrder(tree.root, []int{})
+}
+
+func traversePostOrder(node *Node, list []int) []int {
+	if node.Left != nil {
+		list = traversePostOrder(node.Left, list)
+	}
+	if node.Right != nil {
+		list = traversePostOrder(node.Right, list)
+	}
+	list = append(list, node.Value)
+	return list
 }
 
 func main() {
@@ -210,8 +206,10 @@ func main() {
 	myBST.Insert(1)
 	myBST.Print()
 
-	breadthFirstSearch(myBST)
-	breadthFirstSearchRecursive([]*Node{myBST.root}, []int{})
+	fmt.Println(myBST.DFSInOrder())   // [1 4 6 9 15 20 170]
+	fmt.Println(myBST.DFSPreOrder())  // [9 4 1 6 20 15 170]
+	fmt.Println(myBST.DFSPostOrder()) // [1 6 4 15 170 20 9]
+
 }
 
 // Print exibe a árvore binária no formato JSON.
