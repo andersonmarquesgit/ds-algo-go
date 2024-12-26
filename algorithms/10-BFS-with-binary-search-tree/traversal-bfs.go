@@ -148,6 +148,7 @@ func (tree *BinarySearchTree) Delete(value int) {
 	  1   6    15  170
 */
 
+// Abordagem iterativa
 func breadthFirstSearch(tree *BinarySearchTree) {
 	currentNode := tree.root
 	var list []int
@@ -176,6 +177,28 @@ func breadthFirstSearch(tree *BinarySearchTree) {
 	fmt.Println("BFS: ", list)
 }
 
+// Abordagem recursiva
+func breadthFirstSearchRecursive(queue []*Node, list []int) {
+	if len(queue) == 0 {
+		fmt.Println("BFS Recursive: ", list)
+		return
+	}
+
+	currentNode := queue[0]
+	queue = queue[1:]
+
+	list = append(list, currentNode.Value)
+
+	if currentNode.Left != nil {
+		queue = append(queue, currentNode.Left)
+	}
+	if currentNode.Right != nil {
+		queue = append(queue, currentNode.Right)
+	}
+
+	breadthFirstSearchRecursive(queue, list)
+}
+
 func main() {
 	myBST := NewBinarySearchTree()
 	myBST.Insert(9)
@@ -196,6 +219,7 @@ func main() {
 	fmt.Println("Lookup 44:", myBST.Lookup(44))
 
 	breadthFirstSearch(myBST)
+	breadthFirstSearchRecursive([]*Node{myBST.root}, []int{})
 }
 
 // Print exibe a árvore binária no formato JSON.
