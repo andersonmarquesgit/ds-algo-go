@@ -5,36 +5,27 @@ import (
 	"reflect"
 )
 
-type KeyValuePair struct {
-	key   interface{}
-	value interface{}
-}
-
 type HashTable struct {
-	size    int
-	buckets [][]KeyValuePair
+	buckets map[int]int
 }
 
-func NewHashTable(size int) *HashTable {
-	buckets := make([][]KeyValuePair, size)
+func NewHashTable() *HashTable {
 	return &HashTable{
-		size:    size,
-		buckets: buckets,
+		buckets: make(map[int]int),
 	}
 }
 
-// Função hash para gerar um índice para a chave
 func (h *HashTable) hash(key interface{}) int {
+	const prime = 7 // Constante primo menor para reduzir a magnitude do hash
 	hash := 0
 
 	switch k := key.(type) {
 	case string:
-		for i := 0; i < len(k); i++ {
-			charCode := int(k[i])
-			hash = (hash + charCode*i) % h.size
+		for i, char := range k {
+			hash = (hash*prime + int(char) + i) & 0xFFFF // Limitar a 16 bits (0 a 65535)
 		}
 	case int:
-		hash = k % h.size
+		hash = (k * prime) & 0xFFFF // Limitar a 16 bits
 	default:
 		panic(fmt.Sprintf("Tipo de chave não suportado: %v", reflect.TypeOf(key)))
 	}
@@ -42,86 +33,71 @@ func (h *HashTable) hash(key interface{}) int {
 	return hash
 }
 
-// Método para definir um par chave-valor na tabela hash
-func (h *HashTable) Set(key, value interface{}) {
+func (h *HashTable) Insertion(key interface{}, value int) { // O(1)
 	address := h.hash(key)
-	currentBucket := &h.buckets[address]
 
-	// Se não há bucket no índice, cria um bucket novo
-	if *currentBucket == nil {
-		*currentBucket = []KeyValuePair{}
-	}
-
-	// Verifica se a chave já existe, se sim, atualiza o valor
-	for i, pair := range *currentBucket {
-		if pair.key == key {
-			(*currentBucket)[i].value = value
-			return
-		}
-	}
-
-	// Caso contrário, adiciona um novo par chave-valor
-	*currentBucket = append(*currentBucket, KeyValuePair{key: key, value: value})
+	h.buckets[address] = value
 }
 
-// Método para obter o valor associado a uma chave na tabela hash
-func (h *HashTable) Get(key interface{}) interface{} {
+func (h *HashTable) Search(key interface{}) interface{} { // O(1)
 	address := h.hash(key)
-	currentBucket := h.buckets[address]
+	currentBucket, exists := h.buckets[address]
 
-	// Procura a chave no bucket atual
-	if currentBucket != nil {
-		for _, pair := range currentBucket {
-			if pair.key == key {
-				return pair.value
-			}
-		}
+	if !exists {
+		return nil
 	}
-	return nil
+
+	return currentBucket
 }
 
-func (h *HashTable) Contains(key interface{}) bool {
+func (h *HashTable) Contains(key interface{}) bool { // O(1)
 	address := h.hash(key)
-	currentBucket := h.buckets[address]
+	_, exists := h.buckets[address]
 
-	// Procura a chave no bucket atual
-	if currentBucket != nil {
-		for _, pair := range currentBucket {
-			if pair.key == key {
-				return true
-			}
-		}
-	}
-	return false
+	return exists
 }
 
-func (h *HashTable) Keys() []interface{} {
-	keys := []interface{}{}
-
-	for i := 0; i < h.size; i++ {
-		if h.buckets[i] != nil {
-			keys = append(keys, h.buckets[i][0].key)
-		}
-	}
-
-	return keys
+func (h *HashTable) Deletion(key interface{}) { // O(1)
+	address := h.hash(key)
+	delete(h.buckets, address)
 }
 
 func main() {
-	myHashTable := NewHashTable(50)
-	myHashTable.Set("grapes", 10000)
-	fmt.Println("Value for 'grapes':", myHashTable.Get("grapes"))
+	myHashTable := NewHashTable()
+	myHashTable.Insertion("grapes", 10000)
+	fmt.Println("Value for 'grapes':", myHashTable.Search("grapes"))
+	fmt.Println("")
 
-	myHashTable.Set("apples", 9)
-	fmt.Println("Value for 'apples':", myHashTable.Get("apples"))
+	myHashTable.Insertion("apples", 9)
+	fmt.Println("Value for 'apples':", myHashTable.Search("apples"))
+	fmt.Println("")
 
-	// Testando colisões
-	myHashTable.Set("pears", 500)
-	fmt.Println("Value for 'pears':", myHashTable.Get("pears"))
+	fmt.Println("Keys:", myHashTable.buckets)
+	fmt.Println("Size:", len(myHashTable.buckets))
+	fmt.Println("")
 
-	myHashTable.Set("orange", 1000)
-	fmt.Println("Value for 'orange':", myHashTable.Get("orange"))
+	myHashTable.Insertion("apples", 20000)
+	fmt.Println("Value for 'apples':", myHashTable.Search("apples"))
+	fmt.Println("")
+
+	myHashTable.Insertion("pears", 500)
+	fmt.Println("Value for 'pears':", myHashTable.Search("pears"))
+	fmt.Println("")
+
+	myHashTable.Insertion("orange", 1000)
+	fmt.Println("Value for 'orange':", myHashTable.Search("orange"))
 	fmt.Println("Contains 'orange'?", myHashTable.Contains("orange"))
+	fmt.Println("")
 
-	fmt.Println("Keys:", myHashTable.Keys())
+	myHashTable.Insertion("lemon", 5000)
+	fmt.Println("Value for 'lemon':", myHashTable.Search("lemon"))
+	fmt.Println("Keys:", myHashTable.buckets)
+	fmt.Println("Size:", len(myHashTable.buckets))
+	fmt.Println("")
+	myHashTable.Deletion("lemon")
+	fmt.Println("Contains 'lemon'?", myHashTable.Contains("lemon"))
+	fmt.Println("")
+
+	fmt.Println("Keys:", myHashTable.buckets)
+	fmt.Println("Size:", len(myHashTable.buckets))
 }

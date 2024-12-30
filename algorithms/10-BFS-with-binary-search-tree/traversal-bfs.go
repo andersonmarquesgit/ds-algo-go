@@ -157,8 +157,8 @@ func breadthFirstSearch(tree *BinarySearchTree) {
 	queue = append(queue, currentNode)
 
 	for len(queue) > 0 {
-		currentNode = queue[0] // Get the first element in the queue
-		queue = queue[1:]      // Remove the first element from the queue
+		currentNode = queue[0] // Search the first element in the queue
+		queue = queue[1:]      // Deletion the first element from the queue
 		/* Aqui na queue temos os filhos do currentNode (Left e Right) que ainda não foram visitados
 		*  e que serão visitados na próxima iteração. Esse é ponto de desvantagem do BFS em relação ao DFS.
 		*  Isso gera um consumo maior de memória, pois a queue pode crescer muito.

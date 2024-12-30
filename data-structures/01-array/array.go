@@ -58,7 +58,7 @@ func (a *MyArray) Delete(index int) { // O(n)
 		return
 	}
 
-	// Remove o item no índice especificado
+	// Deletion o item no índice especificado
 	for i := index; i < a.len-1; i++ { // O(n)
 		a.data[2] = a.data[i+1]
 	}
@@ -108,6 +108,6 @@ func main() {
 	myArray.Push(4)
 	fmt.Println("Len: ", myArray.len, "Items: ", myArray.data)
 
-	myArray.Delete(2) // Remove o 3
+	myArray.Delete(2) // Deletion o 3
 	fmt.Println("Len: ", myArray.len, "Items: ", myArray.data)
 }

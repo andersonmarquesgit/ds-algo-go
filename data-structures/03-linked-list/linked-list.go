@@ -271,7 +271,7 @@ func main() {
 
 	myLinkedList.Remove(2)
 	myLinkedList.Print()
-	fmt.Println("Remove index: ", 2)
+	fmt.Println("Deletion index: ", 2)
 	fmt.Println("Offset: ", myLinkedList.offset)
 	fmt.Println("Length: ", myLinkedList.length)
 	fmt.Println("Head: ", myLinkedList.head.value)
