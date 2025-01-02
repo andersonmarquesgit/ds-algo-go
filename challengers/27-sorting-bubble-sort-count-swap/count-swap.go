@@ -89,11 +89,7 @@ func countSwaps(a []int) {
 
 	for !isSorted {
 		swapNumbers := false
-		for i := 0; i < len(a); i++ {
-			if i == len(a)-1 {
-				break
-			}
-
+		for i := 0; i < len(a)-1; i++ {
 			if a[i] > a[i+1] {
 				swap(a, i, i+1)
 				countSwap++
