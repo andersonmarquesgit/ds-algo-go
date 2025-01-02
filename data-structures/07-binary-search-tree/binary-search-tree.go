@@ -185,30 +185,3 @@ func (tree *BinarySearchTree) Print() {
 
 	fmt.Println(string(jsonData)) // Imprime o JSON formatado
 }
-
-//// Print desenha a árvore binária com distinção entre raiz, nós à esquerda e à direita.
-//func (tree *BinarySearchTree) Print() {
-//	if tree.root == nil {
-//		fmt.Println("A árvore está vazia.")
-//		return
-//	}
-//
-//	fmt.Printf("ROOT: %d\n", tree.root.Value)   // Identifica a raiz
-//	printTree(tree.root.Left, "      ", true)   // Nós à esquerda da raiz
-//	printTree(tree.root.Right, "      ", false) // Nós à direita da raiz
-//}
-//
-//// Função auxiliar para imprimir a árvore com distinção entre nós à esquerda e à direita
-//func printTree(node *Node, prefix string, isLeft bool) {
-//	if node != nil {
-//		if isLeft {
-//			fmt.Printf("%s└──(L) %d\n", prefix, node.Value)
-//		} else {
-//			fmt.Printf("%s└──(R) %d\n", prefix, node.Value)
-//		}
-//
-//		newPrefix := prefix + "    "
-//		printTree(node.Left, newPrefix+"    ", true)
-//		printTree(node.Right, newPrefix+"    ", false)
-//	}
-//}
