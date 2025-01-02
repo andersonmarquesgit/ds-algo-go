@@ -6,17 +6,17 @@ func intersection(nums1 []int, nums2 []int) []int {
 	set := make(map[int]bool) // Map for the index int
 
 	// Create a map to store the index of each int in nums1
-	for _, v := range nums1 {
-		set[v] = true
+	for _, n1 := range nums1 {
+		set[n1] = true
 	}
 
 	result := []int{}
 
 	// Iterate over the map and append the int that exists in nums2
-	for _, v := range nums2 {
-		if _, ok := set[v]; ok {
-			result = append(result, v)
-			delete(set, v)
+	for _, n2 := range nums2 {
+		if _, ok := set[n2]; ok {
+			result = append(result, n2)
+			delete(set, n2)
 		}
 	}
 	return result
