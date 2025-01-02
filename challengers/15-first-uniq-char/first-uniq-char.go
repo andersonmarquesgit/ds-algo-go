@@ -34,21 +34,21 @@ import "fmt"
 
 func firstUniqChar(s string) int {
 	runeSlice := []rune(s)
-	set := make(map[int]int) // Map for the index char
+	uniqCharMap := make(map[int]int) // Map for the index char
 
 	// Create a map to store the index of each char in the string
-	for i, v := range runeSlice {
-		if _, ok := set[int(v)]; ok {
-			set[int(v)] = -1
+	for charIndex, character := range runeSlice {
+		if _, ok := uniqCharMap[int(character)]; ok {
+			uniqCharMap[int(character)] = -1
 		} else {
-			set[int(v)] = i
+			uniqCharMap[int(character)] = charIndex
 		}
 	}
 
 	// Iterate over the map and return the first char that has an index different from -1
-	for _, v := range runeSlice {
-		if set[int(v)] != -1 {
-			return set[int(v)]
+	for _, character := range runeSlice {
+		if uniqCharMap[int(character)] != -1 {
+			return uniqCharMap[int(character)]
 		}
 	}
 
