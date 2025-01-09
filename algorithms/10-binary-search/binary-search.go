@@ -29,7 +29,7 @@ func binarySearch(arr []int, target int) bool { // O(log n)
 }
 
 func binarySearchRecursion(arr []int, target, low, high int) bool { // O(log n)
-	if low > high {                                                 // Base case
+	if low > high { // Base case
 		return false
 	}
 
