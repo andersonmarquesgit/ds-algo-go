@@ -51,4 +51,6 @@ func main() {
 	str3 := "aaaabbccca"
 	fmt.Println(encode(str3))
 
+	str4 := "a"
+	fmt.Println(encode(str4))
 }
