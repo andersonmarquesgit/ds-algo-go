@@ -65,7 +65,7 @@ func getMaxWaterContainer(heights []int) int { // O(n^2)
 
 /*
 Time complexity: O(n)
-Space complexity: O(n)
+Space complexity: O(1)
 */
 func getMaxWaterContainerOptimized(heights []int) int {
 	maxArea := 0
@@ -109,7 +109,7 @@ func main() {
 	heights3 := []int{1}
 	fmt.Println(getMaxWaterContainer(heights3))
 
-	fmt.Println("---Using func optimized ----")
+	fmt.Println("--- Using func optimized ----")
 	fmt.Println(getMaxWaterContainerOptimized(heights))
 	fmt.Println(getMaxWaterContainerOptimized(heights2))
 	fmt.Println(getMaxWaterContainerOptimized(heights3))
