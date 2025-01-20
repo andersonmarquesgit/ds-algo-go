@@ -121,13 +121,13 @@ func longestSubstringOptimized(s string) int {
 	var window string
 
 	for rightWindow := 0; rightWindow < len(s); rightWindow++ {
-		char := s[rightWindow]
+		currentChar := s[rightWindow]
 
-		if charIndex, ok := strMap[char]; ok && charIndex >= leftWindow { // Character já foi visto e está dentro da janela
+		if charIndex, ok := strMap[currentChar]; ok && charIndex >= leftWindow { // Character já foi visto e está dentro da janela
 			leftWindow = charIndex + 1
 		}
 
-		strMap[char] = rightWindow
+		strMap[currentChar] = rightWindow
 
 		// Nesse caso o uso de uma variável com potencial de aumentar a medida que a string aumenta, temos um
 		// Space Complexity de O(n), caso precisássemos retornar a string formada
