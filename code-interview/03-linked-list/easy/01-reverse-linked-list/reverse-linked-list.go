@@ -2,10 +2,14 @@ package main
 
 import linked_list "ds-algo-go/data-structures/util/linked-list"
 
+/*
+Time Complexity: O(n)
+Space Complexity: O(1)
+*/
 func reverseLinkedList(head *linked_list.Node) *linked_list.Node {
 	var prev, next *linked_list.Node
 	currentNode := head
-	
+
 	for currentNode != nil {
 		next = currentNode.Next
 		currentNode.Next = prev

@@ -176,8 +176,8 @@ func (l *LinkedList) Print() {
 	fmt.Println("")
 }
 
-func (l *LinkedList) PrintByNode(head *Node) {
-	currentNode := head
+func (l *LinkedList) PrintByNode(node *Node) {
+	currentNode := node
 	for currentNode != nil {
 		fmt.Print("| ", currentNode.Value, " ")
 		currentNode = currentNode.Next
