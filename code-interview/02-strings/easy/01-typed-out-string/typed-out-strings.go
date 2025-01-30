@@ -34,7 +34,7 @@ func buildString(str string) []byte {
 		} else {
 			length := len(builtString)
 			if length > 0 {
-				builtString = builtString[:length-1]
+				builtString = builtString[:length-1] // Remove o ultimo character adicionado
 			}
 		}
 	}
