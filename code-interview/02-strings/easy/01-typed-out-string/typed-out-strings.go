@@ -9,13 +9,13 @@ Space complexity: O(a + b)
 func isSameString(s, t string) bool {
 	resultS := buildString(s) // O(a)
 	resultT := buildString(t) // O(b)
+	// O(a) or O(b). Somado com a complexidade acima, temos: O(2a + b) ou O(a + 2b)
+	// Então a nossa complexidade de tempo é O(a + b)
 
 	if len(resultS) != len(resultT) {
 		return false
 	} else {
 		for i := 0; i < len(resultS); i++ {
-			// O(a) or O(b). Somado com a complexidade acima, temos: O(2a + b) ou O(a + 2b)
-			// Então a nossa complexidade de tempo é O(a + b)
 			if resultS[i] != resultT[i] {
 				return false
 			}
@@ -51,6 +51,7 @@ func isSameStringOptimized(s, t string) bool {
 
 	for p1 >= 0 || p2 >= 0 {
 		if (p1 >= 0 && s[p1] == '#') || (p2 >= 0 && t[p2] == '#') { // Se algum deles for um #, não queremos comparar, então resolvemos as strings
+			// Resolvendo os # de s
 			if p1 >= 0 && s[p1] == '#' {
 				backCount := 2
 				for backCount > 0 {
@@ -62,6 +63,7 @@ func isSameStringOptimized(s, t string) bool {
 				}
 			}
 
+			// Resolvendo os # do t
 			if p2 >= 0 && t[p2] == '#' {
 				backCount := 2
 				for backCount > 0 {
@@ -73,6 +75,7 @@ func isSameStringOptimized(s, t string) bool {
 				}
 			}
 		} else {
+			// Após resolvido os # podemos agora comparar os caracteres de na mesma posição de s e t
 			var charS, charT byte
 			if p2 < 0 {
 				charT = 0
