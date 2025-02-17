@@ -262,6 +262,31 @@ func longestSubstringWithoutRepeating(str string) int {
 	return longest
 }
 
+func longestSubstringWithoutRepeatingUsingSlidingWindow(str string) int {
+	if len(str) <= 1 {
+		return len(str)
+	}
+	longest := 0
+	strMap := make(map[byte]int)
+	leftWindow := 0
+
+	for rightWindow := 0; rightWindow < len(str); rightWindow++ {
+		currentChar := str[rightWindow]
+
+		if charIndex, ok := strMap[currentChar]; ok && charIndex >= leftWindow { // Character já foi visto e está dentro da janela
+			leftWindow = charIndex + 1
+		}
+
+		strMap[currentChar] = rightWindow
+
+		if rightWindow-leftWindow+1 > longest {
+			longest = rightWindow - leftWindow + 1
+		}
+	}
+
+	return longest
+}
+
 func main() {
 	nums := []int{1, 3, 7, 9, 2}
 	fmt.Println(findTwoSum(nums, 11))
@@ -292,16 +317,21 @@ func main() {
 
 	str1 := "abcbdca"
 	fmt.Println(longestSubstringWithoutRepeating(str1))
+	fmt.Println(longestSubstringWithoutRepeatingUsingSlidingWindow(str1))
 
 	str2 := "ccccc"
 	fmt.Println(longestSubstringWithoutRepeating(str2))
+	fmt.Println(longestSubstringWithoutRepeatingUsingSlidingWindow(str2))
 
 	str3 := ""
 	fmt.Println(longestSubstringWithoutRepeating(str3))
+	fmt.Println(longestSubstringWithoutRepeatingUsingSlidingWindow(str3))
 
 	str4 := "abcbda"
 	fmt.Println(longestSubstringWithoutRepeating(str4)) // Função com erro para esse caso de teste, necessário janela deslizante
+	fmt.Println(longestSubstringWithoutRepeatingUsingSlidingWindow(str4))
 
 	str5 := "a"
 	fmt.Println(longestSubstringWithoutRepeating(str5))
+	fmt.Println(longestSubstringWithoutRepeatingUsingSlidingWindow(str5))
 }
