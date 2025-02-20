@@ -39,7 +39,7 @@ func solution(matrix [][]int) [][]int {
 				row += 1
 				col -= 1 // Continue down-left
 			}
-		} else {               // Moving up-right
+		} else { // Moving up-right
 			if col == cols-1 { // Hit right boundary
 				row += 1
 				dir = 1 // Switch direction to down-left
