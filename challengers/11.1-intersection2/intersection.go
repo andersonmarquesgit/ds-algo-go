@@ -61,4 +61,9 @@ func main() {
 	nums3 := []int{4, 9, 5}
 	nums4 := []int{9, 4, 9, 8, 4}
 	fmt.Println(intersection(nums3, nums4)) // [9, 4]
+
+	list1 := []int{1, 2, 3, 5, 8, 13, 21, 34}
+	list2 := []int{2, 3, 5, 7, 13, 21, 31}
+	fmt.Println(intersection(list1, list2))
+
 }
