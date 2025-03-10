@@ -31,7 +31,7 @@ func dfs(array2D [][]int, row int, col int, seen [][]bool, values *[]int) {
 	}
 
 	*values = append(*values, array2D[row][col])
-	seen[row][col] = true // Marcamos que já analisamos aquele elemento
+	seen[row][col] = true // Marcamos que já analisamos aquela posição na matriz
 
 	for i := 0; i < len(directions); i++ {
 		currentDirection := directions[i]
