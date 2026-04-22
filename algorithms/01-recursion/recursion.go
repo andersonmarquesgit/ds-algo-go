@@ -18,7 +18,7 @@ func fibonacciInteractive(n int) int {
 		fib = append(fib, fib[i-1]+fib[i-2]) // Append the sum of the last two elements
 	}
 
-	fmt.Println(fib)
+	//fmt.Println(fib)
 
 	return fib[n]
 }
